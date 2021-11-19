@@ -47,7 +47,8 @@ String  Time_str = "--:--:--";
 String  Date_str = "-- --- ----";
 int     wifi_signal, CurrentHour = 0, CurrentMin = 0, CurrentSec = 0, EventCnt = 0, vref = 1100;
 //################ PROGRAM VARIABLES and OBJECTS ##########################################
-#define max_readings 24 // Limited to 3-days here, but could go to 5-days = 40  
+#define max_readings 24 // Limited to 3-days here, but could go to 5-days = 40 
+int     forecast_days = 5; // define days to display in forecast graphs. This value is related to Max_readings. (max_readings:forceast_days - 8:1 16:2 24:3 32:4 40:5) 
 
 Forecast_record_type  WxConditions[1];
 Forecast_record_type  WxForecast[max_readings];
@@ -1023,9 +1024,9 @@ void DrawGraph(int x_pos, int y_pos, int gwidth, int gheight, float Y1Min, float
       }
     }
   }
-  for (int i = 0; i < 3; i++) {
-    drawString(20 + x_pos + gwidth / 3 * i, y_pos + gheight + 10, String(i) + "d", LEFT);
-    if (i < 2) drawFastVLine(x_pos + gwidth / 3 * i + gwidth / 3, y_pos, gheight, LightGrey);
+  for (int i = 0; i < forecast_days; i++) {
+    drawString(20 + x_pos + gwidth / forecast_days * i, y_pos + gheight + 10, String(i+1) + "d", LEFT); // use of int forecast_days on x-as of bottom graphs. added +1 to display the right days
+    if (i < 2) drawFastVLine(x_pos + gwidth / forecast_days * i + gwidth / forceast_days, y_pos, gheight, LightGrey);
   }
 }
 
